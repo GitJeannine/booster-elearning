@@ -167,6 +167,9 @@
       margin: 0.2rem 0;
     }
 
+    .highlight-box {
+      text-align: center;
+    }
     .quote-box {
       border-left: 4px solid #5c6fff;
       padding-left: 0.8rem;
@@ -291,12 +294,12 @@
     }
 
     .highlight-img {
+      display: block;
+      margin: 0 auto 0.8rem auto;
       width: 100%;
       max-width: 480px;
-      display: block;
-      margin-bottom: 0.8rem;
       border-radius: 0.8rem;
-    }
+}
   
     .reflexion-card {
       background: #fff7e6;
@@ -658,31 +661,43 @@
       }
     });
 
-    const needButton = document.getElementById("need-check");
-
-    if (needButton) {
-      needButton.addEventListener("click", () => {
-        const selected = document.querySelectorAll(".need-select:checked");
-    
-        // alle Info Blöcke ausblenden
-        document.querySelectorAll(".need-info").forEach(el => {
-          el.style.display = "none";
-        });
-    
-        if (selected.length === 0) {
-          return;
-        }
-    
-        // passende Info Blöcke einblenden
-        selected.forEach(item => {
-          const targetId = "need-" + item.value;
-          const block = document.getElementById(targetId);
-          if (block) {
-            block.style.display = "block";
+    // Verzweigte Infos in Modul 2 mit automatischem Scroll
+      const needButton = document.getElementById("need-check");
+      
+      if (needButton) {
+        needButton.addEventListener("click", () => {
+          const selected = document.querySelectorAll(".need-select:checked");
+      
+          // alle Info Blöcke ausblenden
+          document.querySelectorAll(".need-info").forEach(el => {
+            el.style.display = "none";
+          });
+      
+          if (selected.length === 0) {
+            return;
+          }
+      
+          const visibleBlocks = [];
+      
+          // passende Info Blöcke einblenden und merken
+          selected.forEach(item => {
+            const targetId = "need-" + item.value;
+            const block = document.getElementById(targetId);
+            if (block) {
+              block.style.display = "block";
+              visibleBlocks.push(block);
+            }
+          });
+      
+          // zum ersten eingeblendeten Block scrollen
+          if (visibleBlocks.length > 0) {
+            visibleBlocks[0].scrollIntoView({
+              behavior: "smooth",
+              block: "start"
+            });
           }
         });
-      });
-    }
+      }
     
   </script>
 </body>
