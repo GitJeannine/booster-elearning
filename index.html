@@ -309,6 +309,47 @@
       background: #fff7e6;
       border-left: 6px solid #ffb84a;
     }
+
+    .needs-grid {
+      display: grid;
+      gap: 0.4rem;
+      margin: 0.8rem 0 1rem;
+    }
+    
+    .needs-grid label {
+      background: #f5f7ff;
+      border-radius: 0.8rem;
+      padding: 0.4rem 0.6rem;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+    }
+    
+    .needs-grid input {
+      margin: 0;
+    }
+    
+    .need-info {
+      display: none;
+      margin-top: 0.9rem;
+      padding: 0.8rem 1rem;
+      border-radius: 1rem;
+      background: #f8f9ff;
+      font-size: 0.95rem;
+    }
+    
+    .need-info h3 {
+      margin-top: 0;
+      font-size: 1rem;
+    }
+    
+    .small-hint {
+      font-size: 0.8rem;
+      color: #777;
+      margin-top: 0.6rem;
+    }
     
   </style>
 </head>
@@ -469,13 +510,88 @@
         </div>
       </article>
 
-      <!-- Platzhalter für weitere Module -->
+      <!-- Module 2 -->
       <article class="card module" id="modul2" style="display: none;">
         <h2>Modul 2 Deine Booster Auswahl</h2>
-        <p>
-          Hier kannst du später deine Booster Arten vorstellen,
-          zum Beispiel Nackenlockerung, Aufstehen und Strecken,
-          Mini Spaziergang, Wasser holen mit bewusster Bewegung.
+        <p class="tagline">
+          Wähle aus, was dir im Alltag am wichtigsten ist. Danach siehst du passende Booster Infos.
+        </p>
+      
+        <div class="needs-grid">
+          <label>
+            <input type="checkbox" class="need-select" value="fit">
+            Am Abend fit sein
+          </label>
+          <label>
+            <input type="checkbox" class="need-select" value="focus">
+            Konzentration aufrecht erhalten
+          </label>
+          <label>
+            <input type="checkbox" class="need-select" value="back">
+            Rückenschmerzen vorbeugen
+          </label>
+          <label>
+            <input type="checkbox" class="need-select" value="clear">
+            Klaren Kopf haben
+          </label>
+        </div>
+      
+        <button id="need-check" class="btn-primary">
+          Passende Infos anzeigen
+        </button>
+      
+        <div class="need-info" id="need-fit">
+          <h3>Am Abend fit sein</h3>
+          <p>
+            Wenn du über den Tag regelmäßig kurze Bewegungsimpulse einbaust,
+            fühlt sich der Feierabend leichter an und du hast mehr Energie für Familie,
+            Freunde oder Hobbys.
+          </p>
+          <p>
+            Empfehlung: Zwei bis drei Booster über den Tag verteilt. Zum Beispiel
+            einmal am Vormittag, einmal nach dem Mittag und einmal am späten Nachmittag.
+          </p>
+        </div>
+      
+        <div class="need-info" id="need-focus">
+          <h3>Konzentration aufrecht erhalten</h3>
+          <p>
+            Nach einer gewissen Zeit lässt die Aufmerksamkeit nach. Kurze Aktivierung
+            bringt dein Gehirn wieder in einen wachen Zustand. So arbeitest du klarer
+            und machst weniger Fehler.
+          </p>
+          <p>
+            Empfehlung: Einen Fokus Booster planen, bevor du mit einer wichtigen
+            Aufgabe startest, nicht erst wenn du schon müde bist.
+          </p>
+        </div>
+      
+        <div class="need-info" id="need-back">
+          <h3>Rückenschmerzen vorbeugen</h3>
+          <p>
+            Langes Sitzen belastet Muskulatur und Bandscheiben. Kleine Bewegungen
+            lockern und versorgen den Rücken besser mit Blut.
+          </p>
+          <p>
+            Empfehlung: Ein Booster bei dem du aufstehst, Schultern kreist und dich
+            sanft streckst. Gerne mehrmals am Tag.
+          </p>
+        </div>
+      
+        <div class="need-info" id="need-clear">
+          <h3>Klaren Kopf haben</h3>
+          <p>
+            Bewegung hilft, Stress abzubauen und Gedanken zu sortieren. Danach fällt
+            es leichter Prioritäten zu setzen und Entscheidungen zu treffen.
+          </p>
+          <p>
+            Empfehlung: Einen kurzen Gang zum Wasserholen mit bewusstem Atmen oder
+            ein paar Schritte auf dem Flur, bevor du das nächste Meeting startest.
+          </p>
+        </div>
+      
+        <p class="small-hint">
+          Du kannst die Auswahl jederzeit ändern. Klicke danach wieder auf den Button.
         </p>
       </article>
 
@@ -543,6 +659,33 @@
         quizFeedback.className = "quiz-feedback no";
       }
     });
+
+    const needButton = document.getElementById("need-check");
+
+    if (needButton) {
+      needButton.addEventListener("click", () => {
+        const selected = document.querySelectorAll(".need-select:checked");
+    
+        // alle Info Blöcke ausblenden
+        document.querySelectorAll(".need-info").forEach(el => {
+          el.style.display = "none";
+        });
+    
+        if (selected.length === 0) {
+          return;
+        }
+    
+        // passende Info Blöcke einblenden
+        selected.forEach(item => {
+          const targetId = "need-" + item.value;
+          const block = document.getElementById(targetId);
+          if (block) {
+            block.style.display = "block";
+          }
+        });
+      });
+    }
+    
   </script>
 </body>
 </html>
